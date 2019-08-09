@@ -1,18 +1,21 @@
 const Sequalize = require('sequelize');
 const db = require('../db');
 
-const campuses = db.define("campuses", {
+const campus = db.define("campuses", {
     id:{
         type: Sequalize.INTEGER,
-        allowNull: false
-    },
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true 
+    }, 
     name:{
         type: Sequalize.STRING,
         allowNull: false
     },
     bio:{
         type: Sequalize.STRING,
-        allowNull: true
+        allowNull: true,
+        unique: true
     },
     address:{
         type: Sequalize.STRING,
@@ -24,4 +27,4 @@ const campuses = db.define("campuses", {
     }
 });
 
-module.exports = campuses;
+module.exports = campus;

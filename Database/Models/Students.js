@@ -4,7 +4,9 @@ const db = require('../db');
 const students = db.define("students", {
     id:{
         type: Sequalize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
     },
     name:{
         type: Sequalize.STRING,
