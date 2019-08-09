@@ -21,14 +21,17 @@ type in the terminal: \d (this will list all of the tables in the database);
 */
 
 const Sequelize = require('sequelize');
-const databaseName = "crudapp";
+const databaseName = "d6tgj2ck9rr9as";
 
 console.log('Opening database connection');
 
 //The location of the database we are storing our information: postgres://localhost:5432/crudApp
-const db = new Sequelize(databaseName, 'postgres', '123', {
-    host: 'localhost',
+const db = new Sequelize(databaseName, 'eqbpuilqepfgvr', '5e7f679d9280b600892f0309364cba69fa0639102f83fdaf013e267cdd9adbd7', {
+    host: 'ec2-54-221-238-248.compute-1.amazonaws.com',
     dialect: 'postgres',
+    dialectOptions: {
+      ssl: true
+    },
     define: {
         timestamps: false
     },

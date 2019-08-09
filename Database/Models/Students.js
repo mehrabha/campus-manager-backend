@@ -2,12 +2,6 @@ const Sequalize = require('sequelize');
 const db = require('../db');
 
 const students = db.define("students", {
-    id:{
-        type: Sequalize.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-    },
     name:{
         type: Sequalize.STRING,
         allowNull: false
@@ -19,10 +13,6 @@ const students = db.define("students", {
     gpa:{
         type: Sequalize.DECIMAL,
         allowNull: true
-    },
-    college:{
-        type: Sequalize.INTEGER,
-        allowNull: false
     }
 });
 
