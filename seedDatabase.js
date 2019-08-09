@@ -10,7 +10,7 @@ const populateStudentsTable = async (students)=>{
     {
         let current = students[i];
         let builtStudent = await Students.create(current);
-        await builtStudent.setCampus(students[i].id);
+       // await builtStudent.setCampus(students[i].id);
     }
 }
 

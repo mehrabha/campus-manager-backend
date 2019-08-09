@@ -8,8 +8,7 @@ const campus = db.define("campuses", {
     },
     bio:{
         type: Sequalize.STRING,
-        allowNull: true,
-        unique: true
+        allowNull: true
     },
     address:{
         type: Sequalize.STRING,

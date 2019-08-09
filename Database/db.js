@@ -35,6 +35,7 @@ const db = new Sequelize(databaseName, 'eqbpuilqepfgvr', '5e7f679d9280b600892f03
     define: {
         timestamps: false
     },
+    logging: false
   });
 
 module.exports = db;

@@ -1,12 +1,8 @@
-const express = require('express');
-const app = express();
+const router = require('express').Router();
 const campusRouter = require('./campusRouter');
 const studentRouter = require('./studentRouter');
-const bodyParser = require('body-parser');
 
-//Middleware- Body parser is necessary for POST and PUT requests to work
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+router.use('/campuses', campusRouter);
+router.use('/students', studentRouter);
 
-app.use('/campuses', campusRouter);
-app.use('/students', studentRouter);
+module.exports = router;

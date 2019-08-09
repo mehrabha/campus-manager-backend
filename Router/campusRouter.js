@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const Campus = require('../Database/Models/Campuses');
+const Students = require('../Database/Models/Students');
 
 let campuses = [
 	{
@@ -30,7 +32,9 @@ function findById(id){ //helper function to search campuses by Id, IndexOf wasn'
 
 //GET localhost:3000/api/campuses
 router.get('/', (req,res) =>{
-	res.status(200).send(campuses);
+	Campus.findAll({ include: [Student] }) //Eager Loading
+	.then(campuses => res.status(200).json(campuses))
+	.catch(err => console.log(err))
 })
 
 //GET localhost:3000/api/campuses/1
