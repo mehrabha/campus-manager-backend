@@ -46,7 +46,7 @@ router.get('/:id', (req,res) =>{
 	}
 })
 
-//POST localhost:3000/api/campuses
+//POST localhost:3000/api/campuses //issues with duplicates
 router.post('/', (req,res)=>{
 	console.log(req.body);
 	campuses.push(req.body);
