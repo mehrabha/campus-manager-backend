@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Campus = require('../Database/Models/Campuses');
-const Students = require('../Database/Models/Students');
+const Student = require('../Database/Models/Students');
 
 let campuses = [
 	{
@@ -39,15 +39,9 @@ router.get('/', (req,res) =>{
 
 //GET localhost:3000/api/campuses/1
 router.get('/:id', (req,res) =>{
-	if(findById(req.params.id) != -1)
-	{
-		res.status(200).send(campuses[req.params.id]);
-	}
-	else
-	{
-		console.log("Invalid ID");
-		res.status(404).send();
-	}
+	Campus.findByPk(req.params.id)
+	.then(campus=> res.status(404).send(campus))
+	.catch(err => console.log(err))
 })
 
 //POST localhost:3000/api/campuses //issues with duplicates
@@ -73,16 +67,8 @@ router.put('/:id', (req,res)=>{
 
 //DELETE localhost:3000/api/campuses/1
 router.delete('/:id', (req,res)=>{
-	let index = findById(req.params.id);
-	if( index != -1)
-	{
-		campuses.splice(index,1);//removes one element starting from position index
-		res.status(201).send(campuses);
-	}
-	else{
-		console.log("Cannot delete selected element.");
-		res.status(402).send();
-	}
+	Campus.findByPk(req.params.id)
+	.then(campus => campus.destroy())
 })
 
 module.exports = router;
