@@ -17,23 +17,19 @@ router.use(express.json());
 // Get all campuses
 router.get('/', (request, response) => {
     Campus.findAll()
-    .then(campuses => {
-        console.log(campuses);
-        response.status(200).send(campuses);
-    })
-    .catch(error => {
-        response.status(404).send(error);
-    });
+    .then(campuses => response.status(200).send(campuses))
+    .catch(error => response.status(404).send(error));
 });
 
 // Get a campus
 router.get('/:id', (request, response) => {
-    const campus = campuses.find(campus => (campus.id === request.params.id));
-    if (campus) {
-        response.send(campus);
-    } else {
-        response.status(404).send(`Campus with ID ${request.params.id} not found`);
-    }
+    Campus.findAll({
+        where: {
+            id: request.params.id
+        }
+    })
+    .then(campus => response.send(campus))
+    .catch(error => response.status(404).send(`Campus with ID ${request.params.id} not found ${error}`));
 });
 
 // Add a campus
@@ -49,17 +45,23 @@ router.post('/', (request, response) => {
     .catch(error => response.status(400).send(error));
 });
 
-// Edit a campuses
-router.put('/:id', (request, response) => {
-    const campus = campuses.find(campus => (campus.id == request.params.id));
-    if (!campus) {
-        return response.status(404).send(`Campus with ID ${request.params.id} not found`);
-    }
+router.delete('/:id', (request, response) => {
+    Campus.destroy({
+        where: {
+            id: request.params.id
+        }
+    })
+    .then(val => response.sendStatus(200))
+    .catch(error => send(`Campus with ID ${request.params.id} not found ${error}`));
+});
 
+// Edit a campus
+router.put('/:id', (request, response) => {
     const result = Joi.validate(request.body, campusSchema);
     if (result.error) {
         return response.status(400).send(result.error.details);
     }
+    
     
     campus.name = request.body.name;
     campus.bio = request.body.bio;
