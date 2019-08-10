@@ -28,7 +28,7 @@ router.get('/:id', (request, response) => {
             id: request.params.id
         }
     })
-    .then(campus => response.send(campus))
+    .then(campus => response.status(200).send(campus))
     .catch(error => response.status(404).send(`Campus with ID ${request.params.id} not found ${error}`));
 });
 
@@ -41,7 +41,7 @@ router.post('/', (request, response) => {
     }
 
     Campus.create(request.body)
-    .then(campus => response.send(campus))
+    .then(campus => response.status(200).send(campus))
     .catch(error => response.status(400).send(error));
 });
 
@@ -52,7 +52,7 @@ router.delete('/:id', (request, response) => {
         }
     })
     .then(val => response.sendStatus(200))
-    .catch(error => send(`Campus with ID ${request.params.id} not found ${error}`));
+    .catch(error => response.status(404).send(`Campus with ID ${request.params.id} not found ${error}`));
 });
 
 // Edit a campus
@@ -62,12 +62,17 @@ router.put('/:id', (request, response) => {
         return response.status(400).send(result.error.details);
     }
     
-    
-    campus.name = request.body.name;
-    campus.bio = request.body.bio;
-    campus.address = request.body.address;
-    campus.img = request.body.img;
-    response.send(campus);
+    Campus.update({
+        name: request.body.name,
+        bio: request.body.bio,
+        address: request.body.address,
+        img: request.body.img}, 
+        {where: {
+            id: request.params.id}
+        }
+    )
+    .then(val => response.sendStatus(200))
+    .catch(error => response.status(404).send(error));
 });
 
 module.exports = router;
