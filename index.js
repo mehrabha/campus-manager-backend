@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const handlebars = require('express-handlebars');
 const Joi = require('joi');
 const campusRouter = require('./campusRouter.js');
 const studentRouter = require('./studentRouter.js');

@@ -14,4 +14,4 @@ module.exports = db.define('campus', {
     img: {
         type: Sequelize.STRING
     }
-})
+}, {timestamps: false});

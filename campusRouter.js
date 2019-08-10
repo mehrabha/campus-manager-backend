@@ -19,31 +19,11 @@ router.get('/', (request, response) => {
     Campus.findAll()
     .then(campuses => {
         console.log(campuses);
-        response.send(campuses);
+        response.status(200).send(campuses);
     })
     .catch(error => {
         response.status(404).send(error);
     });
-});
-
-router.get('/add', (request, response) => {
-    const data = {
-        id: 2,
-		name: "City College",
-		bio: "goonie 3",
-		address: "123 rosemary st",
-		img: "https://png.pngtree.com/svg/20170616/22811e059c.svg"
-    };
-
-    campus.create({
-        id: data.id,
-        name: data.name,
-        bio: data.bio,
-        address: data.address,
-        img: data.img
-    })
-    .then(Campus => response.redirect('/campuses'))
-    .catch(error => console.log(error));
 });
 
 // Get a campus
@@ -64,15 +44,9 @@ router.post('/', (request, response) => {
         return;
     }
 
-    const campus = {
-		id: campuses.length,
-		name: request.body.name,
-		bio: request.body.bio,
-		address: request.body.address,
-		img: request.body.img
-    };
-    campuses.push(campus);
-    response.send(campus);
+    Campus.create(request.body)
+    .then(campus => response.send(campus))
+    .catch(error => response.status(400).send(error));
 });
 
 // Edit a campuses
