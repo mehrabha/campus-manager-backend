@@ -7,7 +7,7 @@ const studentRouter = require('./studentRouter.js');
 const db = require('./config/database.js');
 db.authenticate()
 .then(() => console.log("Database connected"))
-.catch(err => console.log("Database not connected. ", err));
+.catch(error => console.log("Database not connected. ", error));
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}`));

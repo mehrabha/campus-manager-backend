@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
 
-module.exports = db.define('Campus', {
+module.exports = db.define('campus', {
     name: {
         type: Sequelize.STRING
     },

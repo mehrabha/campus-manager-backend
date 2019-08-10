@@ -2,6 +2,9 @@ const express = require('express');
 const Joi = require('Joi');
 const router = express.Router();
 
+const db = require('./config/database');
+const Campus = require('./modules/Campus');
+
 const campusSchema = {
     name: Joi.string().required(),
     bio: Joi.string().required(),
@@ -9,27 +12,38 @@ const campusSchema = {
     img: Joi.string().required()
 }
 
-let campuses = [
-	{
-		id: 0,
-		name: "hunter",
-		bio: "Cuny",
-		address: "123 Main St",
-		img: "https://png.pngtree.com/svg/20170616/22811e059c.svg"},
-	{
-		id: 1,
-		name: "baruch",
-		bio: "Cuny",
-		address: "456 Main St",
-		img: "https://png.pngtree.com/svg/20170616/22811e059c.svg"
-	},
-];
-
 router.use(express.json());
 
 // Get all campuses
 router.get('/', (request, response) => {
-    response.send(campuses);
+    Campus.findAll()
+    .then(campuses => {
+        console.log(campuses);
+        response.send(campuses);
+    })
+    .catch(error => {
+        response.status(404).send(error);
+    });
+});
+
+router.get('/add', (request, response) => {
+    const data = {
+        id: 2,
+		name: "City College",
+		bio: "goonie 3",
+		address: "123 rosemary st",
+		img: "https://png.pngtree.com/svg/20170616/22811e059c.svg"
+    };
+
+    campus.create({
+        id: data.id,
+        name: data.name,
+        bio: data.bio,
+        address: data.address,
+        img: data.img
+    })
+    .then(Campus => response.redirect('/campuses'))
+    .catch(error => console.log(error));
 });
 
 // Get a campus
