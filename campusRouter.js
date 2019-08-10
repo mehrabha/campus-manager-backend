@@ -23,13 +23,19 @@ router.get('/', (request, response) => {
 
 // Get a campus
 router.get('/:id', (request, response) => {
-    Campus.findAll({
+    let queryResult = Campus.findAll({
         where: {
             id: request.params.id
         }
     })
-    .then(campus => response.status(200).send(campus))
-    .catch(error => response.status(404).send(`Campus with ID ${request.params.id} not found ${error}`));
+    .then(campus => {
+        if (campus.length > 0) {
+            response.status(200).send(campus);
+        } else {
+            response.status(404).send(`Campus with ID ${request.params.id} not found`);
+        }
+    })
+    .catch(error => response.status(404).send(error));
 });
 
 // Add a campus
