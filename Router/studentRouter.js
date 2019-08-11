@@ -11,10 +11,18 @@ router1.get('/', (req,res) =>{
 })
 
 //GET localhost:3000/api/students/1
-router1.get('/:id', (req,res) =>{
-	Student.findByPk(req.params.id)
-	.then(student=> res.status(200).send(student))
-	.catch(err => console.log(err))
+router1.get('/:id', async (req,res) =>{
+	await Student.findByPk(req.params.id)
+	.then(student=> {
+		if(student != null)
+		{
+			res.status(200).send(student);
+		}
+		else
+		{
+			res.status(404).send();
+		}
+	})
 })
 
 //POST localhost:3000/api/students
@@ -33,6 +41,39 @@ router1.post('/', async (req,res)=>{
 
 //PUT localhost:3000/api/students/1
 router1.put('/:id', async(req,res)=>{
+	await Student.findByPk(req.params.id)
+	.then(async student=> {
+		if(student != null)
+		{
+			let data = req.body;
+			await Student.update(	//information to update it with
+				{
+					name: data.name,
+					img: data.img,
+					gpa: data.gpa
+				},
+				{where: { id: req.params.id}}		//location in the database to update
+			)
+				
+			console.log("entry has been updated");
+			await Student.findAll({ include: [Campus] })
+			.then(students => res.status(201).json(students))
+			.catch(err => console.log(err))
+		}
+		else
+		{
+			let data = req.body;
+			await Student.create({
+				name: data.name,
+				img: data.img,
+				gpa: data.gpa
+			});
+			console.log('User added');
+
+			Student.findAll({ include: [Campus] }) //Eager Loading
+			.then(students => res.status(201).json(students))
+		}
+	})
 	let data = req.body;
 	await Student.update(	//information to update it with
 		{
@@ -51,12 +92,23 @@ router1.put('/:id', async(req,res)=>{
 
 //DELETE localhost:3000/api/students/1
 router1.delete('/:id', async (req,res)=>{
-	await Student.destroy({ where: {id : req.params.id}});
-	console.log("entry DESTORYED");
+	await Student.findByPk(req.params.id)
+	.then(async student=> {
+		if(student != null)
+		{
+			await Student.destroy({ where: {id : req.params.id}});
+			console.log("entry DESTORYED");
 
-	await Student.findAll({ include: [Campus] })
-		.then(students => res.status(201).json(students))
-		.catch(err => console.log(err))
+			await Student.findAll({ include: [Campus] })
+			.then(students => res.status(201).json(students))
+			.catch(err => console.log(err))
+		}
+		else
+		{
+			res.status(404).send();
+		}
+	})
+	
 })
 
 module.exports = router1;

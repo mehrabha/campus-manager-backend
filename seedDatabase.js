@@ -5,12 +5,16 @@ const Campuses = require('./Database/Models/Campuses');
 const students = require('./Data/Students');
 const campuses = require('./Data/campuses');
 
+function getRandomInt() {
+    return Math.floor((Math.random() * 2) +1);
+}
+
 const populateStudentsTable = async (students)=>{
     for(let i = 0; i < students.length; i++)
     {
         let current = students[i];
         let builtStudent = await Students.create(current);
-       // await builtStudent.setCampus(students[i].id);
+        await builtStudent.setCampus(getRandomInt());
     }
 }
 
