@@ -14,6 +14,10 @@ db.sync({ force: true }).then(async () => {
     //Middleware- Body parser is necessary for POST and PUT requests to work
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
+    app.use((req, res, next) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        next();
+    });
 
     app.use("/api", apiRouter); //init express app
     app.listen(PORT, ()=>{
