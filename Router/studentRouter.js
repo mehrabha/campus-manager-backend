@@ -28,11 +28,12 @@ router1.get('/:id', async (req,res) =>{
 //POST localhost:3000/api/students
 router1.post('/', async (req,res)=>{
 	let data = req.body;
-	await Student.create({
+	let builtStudent =await Student.create({
 		name: data.name,
         img: data.img,
         gpa: data.gpa
 	});
+	await builtStudent.setCampus(data.campus);
 	console.log('User added');
 
 	Student.findAll({ include: [Campus] }) //Eager Loading
@@ -46,11 +47,13 @@ router1.put('/:id', async(req,res)=>{
 		if(student != null)
 		{
 			let data = req.body;
-			await Student.update(	//information to update it with
+			let builtStudent = await Student.update(	//information to update it with
 				{
 					name: data.name,
 					img: data.img,
-					gpa: data.gpa
+					gpa: data.gpa,
+					campusId: data.campus,
+					campus: await Campus.findByPk(data.campus)
 				},
 				{where: { id: req.params.id}}		//location in the database to update
 			)
@@ -63,31 +66,18 @@ router1.put('/:id', async(req,res)=>{
 		else
 		{
 			let data = req.body;
-			await Student.create({
+			let builtStudent = await Student.create({
 				name: data.name,
 				img: data.img,
 				gpa: data.gpa
 			});
+			await builtStudent.setCampus(data.campus);
 			console.log('User added');
 
 			Student.findAll({ include: [Campus] }) //Eager Loading
 			.then(students => res.status(201).json(students))
 		}
 	})
-	let data = req.body;
-	await Student.update(	//information to update it with
-		{
-			name: data.name,
-            img: data.img,
-            gpa: data.gpa
-		},
-		{where: { id: req.params.id}}		//location in the database to update
-	)
-		
-	console.log("entry has been updated");
-	await Student.findAll({ include: [Campus] })
-	.then(students => res.status(201).json(students))
-	.catch(err => console.log(err))
 })
 
 //DELETE localhost:3000/api/students/1
