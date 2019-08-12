@@ -47,13 +47,21 @@ router1.put('/:id', async(req,res)=>{
 		if(student != null)
 		{
 			let data = req.body;
+			let cam;
+			if(data.campus != null){
+				cam = await Campus.findByPk(data.campus);
+			}
+			else
+			{
+				cam = {};
+			}
 			await Student.update(	//information to update it with
 				{
 					name: data.name,
 					img: data.img,
 					gpa: data.gpa,
 					campusId: data.campus,
-					campus: await Campus.findByPk(data.campus)
+					campus: cam
 				},
 				{where: { id: req.params.id}}		//location in the database to update
 			)

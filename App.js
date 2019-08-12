@@ -14,10 +14,11 @@ db.sync({ force: true }).then(async () => {
     //Middleware- Body parser is necessary for POST and PUT requests to work
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
+    
     app.use((req, res, next) => {
-        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader('Access-Control-Allow-Methods', '*');
-        res.setHeader('Access-Control-Allow-Headers', '*');
+        res.setHeader('Access-Control-Allow-Headers', "*");
         next();
     });
 
