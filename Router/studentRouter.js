@@ -47,7 +47,7 @@ router1.put('/:id', async(req,res)=>{
 		if(student != null)
 		{
 			let data = req.body;
-			let builtStudent = await Student.update(	//information to update it with
+			await Student.update(	//information to update it with
 				{
 					name: data.name,
 					img: data.img,
@@ -58,7 +58,7 @@ router1.put('/:id', async(req,res)=>{
 				{where: { id: req.params.id}}		//location in the database to update
 			)
 				
-			console.log("entry has been updated");
+			console.log("entry has been upddated");
 			await Student.findAll({ include: [Campus] })
 			.then(students => res.status(201).json(students))
 			.catch(err => console.log(err))
@@ -69,7 +69,7 @@ router1.put('/:id', async(req,res)=>{
 			let builtStudent = await Student.create({
 				name: data.name,
 				img: data.img,
-				gpa: data.gpa
+				gpa: data.gpa 
 			});
 			await builtStudent.setCampus(data.campus);
 			console.log('User added');
