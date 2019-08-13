@@ -63,7 +63,7 @@ router1.put('/:id', async(req,res)=>{
 					campusId: data.campus,
 					campus: cam
 				},
-				{where: { id: req.params.id}}		//location in the database to update
+				{where: { id: req.params.id}}	 	//location in the database to update
 			)
 				
 			console.log("entry has been upddated");
