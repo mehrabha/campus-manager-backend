@@ -13,6 +13,10 @@ const students = db.define("students", {
     gpa:{
         type: Sequalize.DECIMAL,
         allowNull: true
+    },
+    campusId:{
+        type: Sequalize.INTEGER,
+        allowNull: true
     }
 });
 
