@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const apiRouter = require("./Router/apiRouter");
 const bodyParser = require('body-parser');
-const PORT = 5000;
+const PORT = 3000;
 const db = require('./Database');
 const seedDatabase = require("./seedDatabase");
 
