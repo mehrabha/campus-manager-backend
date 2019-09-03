@@ -22,6 +22,10 @@ db.sync({ force: true }).then(async () => {
         next();
     });
 
+    app.get("/", (request, response) => {
+	response.status(200).send("Campus manager API");
+    })
+
     app.use("/api", apiRouter); //init express app
     app.listen(PORT, ()=>{
         console.log(`Server is running on PORT${PORT}`);

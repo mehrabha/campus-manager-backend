@@ -2,7 +2,7 @@
   "name": "campus-manager-backend",
   "version": "1.0.0",
   "description": "Campus manager app backend",
-  "main": "apiRouter.js",
+  "main": "./Router/apiRouter.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon App.js"
